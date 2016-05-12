@@ -79,10 +79,6 @@ def chart(request, sensor_id=None):
         response = HttpResponse(data, content_type='application/json')
         response['Content-Disposition'] = 'attachment; filename="sensor-data.json"'
         return response
-        
-        
-    
-    
     ctx={}
     ctx['sensor_id'] = sensor_id 
     return render(request, 'chart.html', ctx)
@@ -93,4 +89,3 @@ def chart_json(request):
     for entry in data:
         entry["timestamp"] = entry["timestamp"][11:19]
     return HttpResponse(json.dumps(data))
-        
