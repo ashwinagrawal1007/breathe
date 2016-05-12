@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h3>Owned Sensors <a class="btn btn-success btn-xs" href="{% url 'add_sensor' %}">Add</a></h3>
+<br>
+{% if sensors %}
+<table class="table">
+	<tr>
+		<th>
+			ID		</th>
+			<th>
+				Zipcode
+			</th>
+			<th>
+				Public
+			</th>
+			<th>
+			</th>
+			<th>
+			</th>
+			<th>
+			</th>
+{% endif %}
+		</tr>
+		{% for sensor in sensors %}
+		<tr>
+			<td>
+				{{ sensor.id }} 
+			</td>
+			<td>
+				{{ sensor.zipcode }} 
+			</td>
+			<td>
+				{% if sensor.public_flag %}
+				<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:#00cc66"></span>	</td>
+				{% endif %} 
+			</td>
+			<td>
+				<a class="btn btn-primary btn-xs" href ='{% url "chart" sensor.id %}'> View Graphs</a>
+			</td>
+			<td>
+				<div>
+					<input type="checkbox" class="toggle-sensor" data-size="mini" {% if sensor.on_status %}checked{%endif%} id="toggle-sensor-{{ sensor.id }}">
+				</div>
+			</td>
+			<td>
+				<a href ='{% url "delete_sensor" sensor.id %}'>
+				<span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="color:#cc0000	"></span></a>	</td>
+			</tr>
+			{% endfor %}
+		</table>
+
+
+
+
+	
+		<h3>Subscribed Sensors <a class="btn btn-success btn-xs" href="{% url 'subscribe_sensor' %}">Add</a></h3>
+
+
+{% if subscribed_sensors %}
+
+<table class="table">
+	<tr>
+		<th>
+			ID		
+		</th>
+		<th>
+			Zipcode
+		</th>
+		<th>
+			ON
+		</th>
+		<th>
+		</th>
+		<th>
+		</th>
+		<th>
+		</th>
+{% endif %}
+		</tr>
+		{% for sub in subscribed_sensors %}
+		<tr>
+			<td>
+				{{ sub.sensor.id }} 
+			</td>
+			<td>
+				{{ sub.sensor.zipcode }} 
+			</td>
+			<td>
+				{% if sub.sensor.public_flag %}
+				<span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:#00cc66"></span>	</td>
+				{% endif %} 
+			</td>
+			<td>
+				<a class="btn btn-primary btn-xs" href ='{% url "chart" sub.sensor.id %}'> View Graphs</a>
+			</td>
+			<td>
+				<div style="min-width: 40px"></div>
+			</td>
+			<td>
+				<a href ='{% url "unsubscribe_sensor" sub.sensor.id %}'> 
+				<span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="color:#cc0000"></span></a></td>
+			</tr>
+			{% endfor %}
+		</table>
+
+					<script>
+					$("input.toggle-sensor").bootstrapSwitch();
+
+	
+					{% for sensor in sensors%}
+					$("input#toggle-sensor-{{ sensor.id }}").on('switchChange.bootstrapSwitch', function(event, state) {
+						window.location.href = "{% url "toggle_sensor" sensor.id %}"
+					});
+					{% endfor %}
+					</script>
+
+					{% endblock %}

@@ -1,0 +1,139 @@
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Breathe</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+	<link href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+	<script src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"> </script>
+	<style>
+	#header {
+  padding-right: 15%;
+  padding-left: 15%;
+}
+
+div#content {
+    padding-right: 1%;
+    padding-left: 1%;
+}
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+legend {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+	
+}
+canvas {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+ 
+	
+}
+.hero-unit{
+    background-image: url('https://images.unsplash.com/photo-1446426156356-92b664d86b77?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=92e96949ac731e7cbcac943aa5934554');
+    background-size: cover;
+    height: 500px;
+}
+.hero-unit {
+    padding: 10px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    color: inherit;
+    background-color: #eeeeee;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+	font-family: "Gill Sans", Helvetica, Arial, sans-serif;
+	color:rgb(86, 93, 99);
+	
+}
+
+.hero-unit > h2 {
+    padding-top: 5%;
+}
+
+
+.hero-unit > h1 {
+    padding-top: 8%;
+	font-size: 5em;
+}
+
+</style>
+</head>
+
+<body>
+
+
+    <div id="header">
+		<div class="span12">
+    {% block header %}
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="/console">Sensor Cloud</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      
+		  {% if not user.is_authenticated %}
+		  <ul class="nav navbar-nav navbar-right">
+		  <li><a href="{% url 'auth_login' %}">{% trans "Log In" %}</a></li>
+	  </ul>
+{% else %}
+	      <ul class="nav navbar-nav navbar-right">
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }} <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+
+          <li><a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a></li>
+          <li><a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a></li>
+
+	          </ul>
+	        </li>
+	      </ul>
+	      {% endif %}
+		  
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	{% endblock header %}
+	
+	{% if messages %}
+		{% for message in messages %}
+	<div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  {{ message }}
+	</div>
+
+		{% endfor %}
+	{% endif %}
+     <div id="content"> 
+    <h1>{% block title %}{% endblock %}</h1>
+    {% block content %}
+
+    {% endblock content %}
+    </div>
+	</div>
+
+    <div id="footer">
+    {% block footer %}
+
+    {% endblock %}
+    </div>
+</body>
+
+</html>

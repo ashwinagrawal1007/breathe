@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<form class="form-horizontal" method="post">
+	<legend>Download a json data file of sensor data for a range of dates</legend>
+	{% csrf_token %}
+		
+	<div class="container">
+		<div class='col-md-5'>
+			<div class="form-group">
+				<div class='input-group date' id='datetimepicker6'>
+					<label for="from">From</label>
+					<input type="text" id="from" name="from" required>
+				</div>
+			</div>
+		</div>
+		<div class='col-md-5'>
+			<div class="form-group">
+				<div class='input-group date' id='datetimepicker7' >
+					<label for="to">To</label>
+					<input type="text" id="to" name="to" required>
+				</div>
+			</div>
+		</div>
+			
+		<div class="form-group">
+			<div class="col-md-5">
+				<button type="submit" class="btn btn-primary">Download</button>
+			</div>
+		</div>
+	</div>    
+</form>
+
+<div class="form-horizontal">
+	<div class="container">
+	
+		<div class='col-md-5'>
+			<div class="form-group">
+				<div>
+					<h4>Nitrogen Dioxide</h4>
+					<canvas id="nitrogen_dioxide" width="400px" height="210"></canvas>
+					
+				</div>
+			</div>
+		</div>
+		<div class='col-md-5'>
+			<div class="form-group">
+				<div>
+					<h4>Hydrogen Sulfide</h4>
+					<canvas id="hydrogen_sulfide" width="400px" height="210"></canvas>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class='col-md-5'>
+			<div class="form-group">
+				<div>
+					<h4>Sulphur Dioxide</h4>
+					<canvas id="sulphur_dioxide" width="400px" height="210"></canvas>
+					
+				</div>
+			</div>
+		</div>
+		<div class='col-md-5'>
+			<div class="form-group">
+				<div>
+					<h4>Carbon Monoxide</h4>
+					<canvas id="carbon_monoxide" width="400px" height="210"></canvas>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+sensorId = {{ sensor_id }};
+</script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="/static/views.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	
+<script>
+$(function() {
+	$( "#from" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 3,
+		onClose: function( selectedDate ) {
+			$( "#to" ).datepicker( "option", "minDate", selectedDate ).datepicker("option", "dateFormat", "yy-mm-dd");
+		}
+	});
+	$( "#to" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 3,
+		onClose: function( selectedDate ) {
+			$( "#from" ).datepicker( "option", "maxDate", selectedDate ).datepicker("option", "dateFormat", "yy-mm-dd");
+		}
+	});
+});
+</script>
+
+
+{% endblock %}

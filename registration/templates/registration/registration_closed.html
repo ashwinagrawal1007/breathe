@@ -1,0 +1,20 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+
+{% load bootstrap %}
+
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-xs-6 col-md-4"></div>
+  <div class="col-xs-6 col-md-4">
+	<p class="text-center">
+{% trans "Sorry, but registration is closed at this moment. Come back later." %}</p>
+  </div>
+  <div class="col-xs-6 col-md-4"></div>
+</div>
+
+{% endblock %}
